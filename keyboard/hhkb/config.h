@@ -23,7 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define PRODUCT_ID      0xCAFE
 #define DEVICE_VER      0x0104
 #define MANUFACTURER    t.m.k.
-#define PRODUCT         HHKB mod
+#define PRODUCT         HHKB Noe mod
 #define DESCRIPTION     t.m.k. keyboard firmware for HHKB mod
 
 
@@ -43,7 +43,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* period of tapping(ms) */
 #define TAPPING_TERM    300
 /* tap count needed for toggling a feature */
-#define TAPPING_TOGGLE  5
+#define TAPPING_TOGGLE  2
 /* Oneshot timeout(ms) */
 #define ONESHOT_TIMEOUT 300
 

@@ -111,7 +111,7 @@ OPT_DEFS += -DBOOTLOADER_SIZE=4096
 # Build Options
 #   comment out to disable the options.
 #
-#BOOTMAGIC_ENABLE ?= yes	# Virtual DIP switch configuration
+BOOTMAGIC_ENABLE ?= yes		# Virtual DIP switch configuration
 MOUSEKEY_ENABLE ?= yes		# Mouse keys
 EXTRAKEY_ENABLE ?= yes		# Audio control and System control
 CONSOLE_ENABLE ?= yes		# Console for debug
@@ -120,7 +120,7 @@ NKRO_ENABLE ?= yes		# USB Nkey Rollover
 #HHKB_JP ?= yes			# HHKB JP support
 #UNIMAP_ENABLE ?= yes		# Universal keymap
 #ACTIONMAP_ENABLE ?= yes	# Use 16bit actionmap instead of 8bit keymap
-#KEYMAP_SECTION_ENABLE ?= yes	# fixed address keymap for keymap editor
+KEYMAP_SECTION_ENABLE ?= yes	# fixed address keymap for keymap editor
 
 #OPT_DEFS += -DNO_ACTION_TAPPING
 #OPT_DEFS += -DNO_ACTION_LAYER

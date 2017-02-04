@@ -29,64 +29,117 @@ enum macro_id {
     CMD_TAB,
 };
 
-#define AC_L1      ACTION_LAYER_MOMENTARY(1)
-#define AC_L2      ACTION_LAYER_MOMENTARY(2)
-#define AC_SLS3    ACTION_LAYER_TAP_KEY(3, KC_SLSH)
-/* #define AC_SCL3    ACTION_LAYER_TAP_KEY(3, KC_SCLN) */
-#define AC_SPC4    ACTION_LAYER_TAP_KEY(4, KC_SPC)
-#define AC_APSW    ACTION_MACRO(ALT_TAB)
-#define AC_APSW2   ACTION_MACRO(CMD_TAB)
+enum keymap_layout {
+    BASE = 0,
+    DVORAK,
+    TENKEY,
+    MOUSE,
+    HHKB,
+    HHKB_EXT,
+};
+
+#define AC_L0         ACTION_LAYER_MOMENTARY(BASE)
+#define AC_L1         ACTION_LAYER_MOMENTARY(HHKB)
+#define AC_MENU2      ACTION_LAYER_TAP_KEY(HHKB_EXT, KC_MENU)
+/* #define AC_SLS3       ACTION_LAYER_TAP_KEY(3, KC_SLSH) */
+#define AC_SPC4       ACTION_LAYER_TAP_KEY(MOUSE, KC_SPC)
+
+#define AC_BASE0 ACTION_DEFAULT_LAYER_SET(BASE)
+#define AC_HHKB1 ACTION_DEFAULT_LAYER_SET(HHKB)
+/* #define AC_DFLTL2 ACTION_DEFAULT_LAYER_SET(HHKB_EXT) */
+#define AC_TEN3 ACTION_DEFAULT_LAYER_SET(TENKEY)
+#define AC_MSE4 ACTION_DEFAULT_LAYER_SET(MOUSE)
+#define AC_DVRK5 ACTION_DEFAULT_LAYER_SET(DVORAK)
+
+#define AC_APSW   ACTION_MODS_KEY(MOD_LGUI, KC_TAB)
+/* #define AC_LALT_RO   ACTION_MODS_TAP_KEY(MOD_LALT, KC_RO) */
+/* #define AC_RGUI_HENK   ACTION_MODS_TAP_KEY(MOD_RGUI, KC_HENK) */
+/* #define AC_RALT_MHEN   ACTION_MODS_TAP_KEY(MOD_RALT, KC_MHEN) */
+
 #define AC_BACK    ACTION_MODS_KEY(MOD_LALT, KC_LEFT)
 #define AC_FRWD    ACTION_MODS_KEY(MOD_LALT, KC_RIGHT)
-#define AC_ENT_    ACTION_MODS_TAP_KEY(MOD_RCTL, KC_ENT)
+#define AC_RCTL_ENT    ACTION_MODS_TAP_KEY(MOD_RCTL, KC_ENT)
+
+#define AC_LSFTONE  ACTION_MODS_ONESHOT(MOD_LSFT)
+#define AC_RSFTONE  ACTION_MODS_ONESHOT(MOD_RSFT)
 
 // Function: LShift with tap '('
 #define AC_LPRN     ACTION_FUNCTION_TAP(LSHIFT_LPAREN)
 // Macro: say hello
 #define AC_HELO     ACTION_MACRO(HELLO)
 
-
 #ifdef KEYMAP_SECTION_ENABLE
 const action_t actionmaps[][UNIMAP_ROWS][UNIMAP_COLS] __attribute__ ((section (".keymap.keymaps"))) = {
 #else
 const action_t actionmaps[][UNIMAP_ROWS][UNIMAP_COLS] PROGMEM = {
 #endif
-    [0] = UNIMAP_HHKB(
+    [BASE] = UNIMAP_HHKB(
     ESC, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, BSLS,GRV,
     TAB, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,   LBRC,RBRC,     BSPC,
-    LCTL,A,   S,   D,   F,   G,   H,   J,   K,   L,   SCLN,QUOT,          ENT_,
-    LSFT,     Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, SLS3,     RSFT,L2,
+    LCTL,A,   S,   D,   F,   G,   H,   J,   K,   L,   SCLN,QUOT,     RCTL_ENT,
+    LSFT,     Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, SLSH,     RSFT,MENU2,
          LALT,L1,               SPC4,                    RGUI,RALT),
 
-    [1] = UNIMAP_HHKB(
+    [HHKB] = UNIMAP_HHKB(
     PWR, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, INS, DEL,
-    CAPS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,PSCR,SLCK,PAUS,UP,  TRNS,     TRNS,
-    TRNS,VOLD,VOLU,MUTE,EJCT,TRNS,PAST,PSLS,HOME,PGUP,LEFT,RGHT,          PENT,
-    TRNS,     UNDO,CUT,COPY,PASTE,TRNS,PPLS,PMNS,END, PGDN,DOWN,     TRNS,TRNS,
+    APSW,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,PSCR,SLCK,PAUS,UP,  TRNS,     TRNS,
+    TRNS,VOLD,VOLU,MUTE,F20,TRNS,PAST,PSLS,HOME,PGUP,LEFT,RGHT,          PENT,
+    TRNS,     TRNS,TRNS,TRNS,TRNS,TRNS,PPLS,PMNS,END, PGDN,DOWN,     TRNS, TRNS,
          TRNS,TRNS,               TRNS,                    TRNS,TRNS),
 
-    [2] = UNIMAP_HHKB(
-    GRV, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, INS, DEL,
-    APSW,NO,  NO,  NO,  NO,  NO,  WH_L,WH_D,WH_L,WH_U,WH_R,BACK,FRWD,     APSW2,
-    LCTL,ACL0,ACL1,ACL2,ACL2,NO,  MS_L,  MS_D,MS_U,MS_R,TRNS,NO,            ENT,
-    LSFT,     NO,  NO,  NO,  NO,  BTN3,BTN2,BTN1,BACK,FRWD,NO,       RSFT,TRNS,
-         LALT,LGUI,               BTN1,                    TRNS,TRNS),
-
-    [3] = UNIMAP_HHKB(
-    GRV, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, INS, DEL,
-    TAB, HOME,PGDN,UP,  PGUP,END, HOME,PGDN,PGUP,END, NO,  NO,  NO,       BSPC,
-    LCTL,NO,  LEFT,DOWN,RGHT,NO,  LEFT,DOWN,UP,  RGHT,NO,  NO,            ENT,
-    LSFT,     NO,  NO,  NO,  NO,  NO,  HOME,PGDN,PGUP,END, TRNS,     RSFT,TRNS,
-         LALT,LGUI,               SPC,                     RGUI,RALT),
-
-    [4] = UNIMAP_HHKB(
-    GRV, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, INS, DEL,
-    APSW,NO,  NO,  NO,  NO,  NO,  WH_L,WH_D,MS_U,WH_U,WH_R,BTN4,BTN5,     APSW2,
-    LCTL,VOLD,VOLU,MUTE,EJCT,  NO,  MS_L,  MS_D,MS_U,MS_R,BTN1,NO,            ENT,
-    LSFT,     NO,  NO,  NO,  NO,  BTN3,BTN2,BTN1,BACK,FRWD,NO,       RSFT,TRNS,
+    [HHKB_EXT] = UNIMAP_HHKB(
+    PWR, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, INS, DEL,
+    CAPS,BASE0,HHKB1,TEN3,MSE4,DVRK5,TRNS,TRNS,PSCR,SLCK,PAUS,UP,  TRNS,     TRNS,
+    TRNS,VOLD,VOLU,MUTE,F20,TRNS,PAST,PSLS,HOME,PGUP,LEFT,RGHT,          PENT,
+    TRNS,     TRNS,TRNS,TRNS,TRNS,TRNS,PPLS,PMNS,END, PGDN,DOWN,     TRNS, TRNS,
          TRNS,TRNS,               TRNS,                    TRNS,TRNS),
+
+    /* Layer 3: Tenkey layer
+     * ,-----------------------------------------------------------------------------------------.
+     * | Esc |     |     |     |     |     |     |     |     |     |  /  |  *  |  -  |     | BSp |
+     * |-----------------------------------------------------------------------------------------|
+     * |        |     |     |     |     |     |     |     |     |  7  |  8  |  9  |  +  |        |
+     * |-----------------------------------------------------------------------------------------|
+     * |          |     |     |     |     |     |     |     |     |  4  |  5  |  6  |   Enter    |
+     * |-----------------------------------------------------------------------------------------|
+     * |             |     |     |     |     |     |     |     |  1  |  2  |  3  |    +    | Fn0 |
+     * `-----------------------------------------------------------------------------------------'
+     *           |     |        |              SpaceFN              |   0    |  .  |
+     *           `-----------------------------------------------------------------'
+     */
+    [TENKEY] = UNIMAP_HHKB(
+    ESC, NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  PSLS,PAST,PMNS,NO,  BSPC, \
+    TRNS,NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  KP_7,KP_8,KP_9,PPLS,NO, \
+    TRNS,NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  KP_4,KP_5,KP_6,PENT, \
+    TRNS,NO,  NO,  NO,  NO,  NO,  NO,  NO,  KP_1,KP_2,KP_3,PPLS,MENU2, \
+          TRNS,L1,                TRNS,                 KP_0,PDOT),
+
+    [MOUSE] = UNIMAP_HHKB(
+    ESC, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, INS, DEL,
+    TAB, NO,  NO,  NO,  NO,  NO,  NO,BTN1,BTN2,BTN3,BTN4,BACK,FRWD,     TRNS,
+    LCTL,NO,  ACL0,ACL1,ACL2, NO, MS_L,MS_D,MS_U,MS_R,TRNS,NO,            ENT,
+    LSFT,     NO,  NO,  NO,  NO,  NO,WH_L,WH_D,WH_U,WH_R,NO,       RSFT,MENU2,
+         TRNS,L1,               TRNS,                    TRNS,TRNS),
+    /* Layer 5: Dvorak Layer
+     * ,-----------------------------------------------------------------------------------------.
+     * | Esc |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |  0  |  [  |  ]  |  `  | BSp |
+     * |-----------------------------------------------------------------------------------------|
+     * |  Tab   |  '  |  ,  |  .  |  P  |  Y  |  F  |  G  |  C  |  R  |  L  |  /  |  =  |   \    |
+     * |-----------------------------------------------------------------------------------------|
+     * | Control  |  A  |  O  |  E  |  U  |  I  |  D  |  H  |  T  |  N  |  S  |  -  |   Enter    |
+     * |-----------------------------------------------------------------------------------------|
+     * |    Shift    |  ;  |  Q  |  J  |  K  |  X  |  B  |  M  |  W  |  V  |  Z  |  Shift  | Fn0 |
+     * `-----------------------------------------------------------------------------------------'
+     *           |LAlt |  LGui  |              SpaceFN              |  RGui  |RAlt |
+     *           `-----------------------------------------------------------------'
+     */
+    [DVORAK] = UNIMAP_HHKB(
+    ESC, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   LBRC,RBRC,BSLS, GRV, \
+    TAB, QUOT,COMM,DOT, P,   Y,   F,   G,   C,   R,   L,   SLSH,EQL, BSPC, \
+    TRNS,A,   O,   E,   U,   I,   D,   H,   T,   N,   S,   MINS,ENT, \
+    TRNS,SCLN,Q,   J,   K,   X,   B,   M,   W,   V,   Z,   TRNS,MENU2, \
+       TRNS,L1,                SPC4,                 TRNS,TRNS),
 };
-
 
 
 /*
