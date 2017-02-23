@@ -93,7 +93,8 @@ OPT_DEFS += -DINTERRUPT_CONTROL_ENDPOINT
 MOUSEKEY_ENABLE ?= yes	# Mouse keys
 EXTRAKEY_ENABLE ?= yes	# Media control and System control
 CONSOLE_ENABLE ?= yes	# Console for debug
-#COMMAND_ENABLE ?= yes    # Commands for debug and configuration
+COMMAND_ENABLE ?= yes    # Commands for debug and configuration
+KEYMAP_SECTION_ENABLE ?= yes
 #NKRO_ENABLE ?= yes	# USB Nkey Rollover
 
 # Boot Section Size in bytes
