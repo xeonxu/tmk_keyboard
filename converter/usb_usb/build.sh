@@ -1,4 +1,6 @@
 #!/bin/bash
+make clean&&make -j8
+
 ls /dev/tty* > /tmp/1;
 echo "Reset your Arduino Leonardo now";
 while [[ -z $USB ]]; do

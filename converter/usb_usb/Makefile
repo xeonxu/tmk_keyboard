@@ -92,7 +92,7 @@ OPT_DEFS += -DINTERRUPT_CONTROL_ENDPOINT
 #
 MOUSEKEY_ENABLE ?= yes	# Mouse keys
 EXTRAKEY_ENABLE ?= yes	# Media control and System control
-CONSOLE_ENABLE ?= yes	# Console for debug
+# CONSOLE_ENABLE ?= yes	# Console for debug
 COMMAND_ENABLE ?= yes    # Commands for debug and configuration
 KEYMAP_SECTION_ENABLE ?= yes
 #NKRO_ENABLE ?= yes	# USB Nkey Rollover
@@ -141,9 +141,7 @@ VPATH += $(TMK_DIR)
 
 
 # program Leonardo
-PROGRAM_CMD = avrdude -p$(MCU) -cavr109 -b57600 -Uflash:w:$(TARGET).hex -P$(DEV)
-
-
+PROGRAM_CMD = @if [ `avr-size $(TARGET).hex|tail -1|cut -f2` -lt 28000 ];then avrdude -p$(MCU) -cavr109 -b115200 -Uflash:w:$(TARGET).hex -P$(DEV);else echo -n "Firmware is too big to flash! Try to disable some functions to reduce the size.\n\n\n" && exit 1;fi
 
 include $(TMK_DIR)/protocol/usb_hid.mk
 include $(TMK_DIR)/protocol/lufa.mk
