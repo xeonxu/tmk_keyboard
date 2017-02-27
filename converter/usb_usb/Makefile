@@ -141,7 +141,8 @@ VPATH += $(TMK_DIR)
 
 
 # program Leonardo
-PROGRAM_CMD = @if [ `avr-size $(TARGET).hex|tail -1|cut -f2` -lt 28000 ];then avrdude -p$(MCU) -cavr109 -b115200 -Uflash:w:$(TARGET).hex -P$(DEV);else echo -n "Firmware is too big to flash! Try to disable some functions to reduce the size.\n\n\n" && exit 1;fi
+# PROGRAM_CMD = @if [ `avr-size $(TARGET).hex|tail -1|cut -f2` -lt 28000 ];then avrdude -p$(MCU) -cavr109 -b115200 -Uflash:w:$(TARGET).hex -P$(DEV);else echo -n "Firmware is too big to flash! Try to disable some functions to reduce the size.\n\n\n" && exit 1;fi
+PROGRAM_CMD = avrdude -p$(MCU) -cavr109 -b115200 -Uflash:w:$(TARGET).hex -P$(DEV)
 
 include $(TMK_DIR)/protocol/usb_hid.mk
 include $(TMK_DIR)/protocol/lufa.mk
