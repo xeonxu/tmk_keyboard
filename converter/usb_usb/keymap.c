@@ -18,7 +18,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "keymap_common.h"
 #include "macro_str.h"
 #include "action_util.h"
-
+#include "action.h"
+#include "action_code.h"
+#include "action_layer.h"
 
 /* ,---.   ,---------------. ,---------------. ,---------------. ,-----------.
  * |Esc|   |F1 |F2 |F3 |F4 | |F5 |F6 |F7 |F8 | |F9 |F10|F11|F12| |PrS|ScL|Pau|
@@ -35,22 +37,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * |Ctl|Gui|Alt|           Space               |Alt|App  |Ctl  | |Lef|Dow|Rig| |      0|  .|Ent|
  * `-----------------------------------------------------------' `-----------' `---------------'
  */
-#define KEYMAP_NOE( \
-    K29,K3A,K3B,K3C,K3D,K3E,K3F,K40,K41,K42,K43,K44,K45,      K46,K47,K48,                   \
-    K35,K1E,K1F,K20,K21,K22,K23,K24,K25,K26,K27,K2D,K2E,K2A,  K49,K4A,K4B,  K53,K54,K55,K56, \
-    K2B,K14,K1A,K08,K15,K17,K1C,K18,K0C,K12,K13,K2F,K30,K31,  K4C,K4D,K4E,  K5F,K60,K61,     \
-    K39,K04,K16,K07,K09,K0A,K0B,K0D,K0E,K0F,K33,K34,    K28,                K5C,K5D,K5E,K57, \
-    KE1,K1D,K1B,K06,K19,K05,K11,K10,K36,K37,K38,        KE5,      K52,      K59,K5A,K5B,     \
-    KE0,KE3,KE2,        K2C,                KE6,K65,    KE4,  K50,K51,K4F,  K62,    K63,K58  \
-) KEYMAP_ALL( \
-            NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO,                                               \
-    K29,    K3A,K3B,K3C,K3D,K3E,K3F,K40,K41,K42,K43,K44,K45,      K46,K47,K48,  NO, NO, NO, NO,  NO,      \
-    K35,K1E,K1F,K20,K21,K22,K23,K24,K25,K26,K27,K2D,K2E,NO, K2A,  K49,K4A,K4B,  K53,K54,K55,K56, NO, NO,  \
-    K2B,K14,K1A,K08,K15,K17,K1C,K18,K0C,K12,K13,K2F,K30,    K31,  K4C,K4D,K4E,  K5F,K60,K61,K57, NO, NO,  \
-    K39,K04,K16,K07,K09,K0A,K0B,K0D,K0E,K0F,K33,K34,    NO, K28,                K5C,K5D,K5E,NO,  NO, NO,  \
-    KE1,NO, K1D,K1B,K06,K19,K05,K11,K10,K36,K37,K38,    NO, KE5,      K52,      K59,K5A,K5B,NO,  NO, NO,  \
-    KE0,KE3,KE2,NO, NO,     K2C,    NO, NO, NO, KE6, NO,K65,KE4,  K50,K51,K4F,  K62,    K63,K58, NO, NO   \
-)
+/* #define KEYMAP_NOE( \ */
+/*     K29,K3A,K3B,K3C,K3D,K3E,K3F,K40,K41,K42,K43,K44,K45,      K46,K47,K48,                   \ */
+/*     K35,K1E,K1F,K20,K21,K22,K23,K24,K25,K26,K27,K2D,K2E,K2A,  K49,K4A,K4B,  K53,K54,K55,K56, \ */
+/*     K2B,K14,K1A,K08,K15,K17,K1C,K18,K0C,K12,K13,K2F,K30,K31,  K4C,K4D,K4E,  K5F,K60,K61,     \ */
+/*     K39,K04,K16,K07,K09,K0A,K0B,K0D,K0E,K0F,K33,K34,    K28,                K5C,K5D,K5E,K57, \ */
+/*     KE1,K1D,K1B,K06,K19,K05,K11,K10,K36,K37,K38,        KE5,      K52,      K59,K5A,K5B,     \ */
+/*     KE0,KE3,KE2,        K2C,                KE6,K65,    KE4,  K50,K51,K4F,  K62,    K63,K58  \ */
+/* ) KEYMAP_ALL( \ */
+/*             NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO,                                               \ */
+/*     K29,    K3A,K3B,K3C,K3D,K3E,K3F,K40,K41,K42,K43,K44,K45,      K46,K47,K48,  NO, NO, NO, NO,  NO,      \ */
+/*     K35,K1E,K1F,K20,K21,K22,K23,K24,K25,K26,K27,K2D,K2E,NO, K2A,  K49,K4A,K4B,  K53,K54,K55,K56, NO, NO,  \ */
+/*     K2B,K14,K1A,K08,K15,K17,K1C,K18,K0C,K12,K13,K2F,K30,    K31,  K4C,K4D,K4E,  K5F,K60,K61,K57, NO, NO,  \ */
+/*     K39,K04,K16,K07,K09,K0A,K0B,K0D,K0E,K0F,K33,K34,    NO, K28,                K5C,K5D,K5E,NO,  NO, NO,  \ */
+/*     KE1,NO, K1D,K1B,K06,K19,K05,K11,K10,K36,K37,K38,    NO, KE5,      K52,      K59,K5A,K5B,NO,  NO, NO,  \ */
+/*     KE0,KE3,KE2,NO, NO,     K2C,    NO, NO, NO, KE6, NO,K65,KE4,  K50,K51,K4F,  K62,    K63,K58, NO, NO   \ */
+/* ) */
 
 
 #define KEYMAP_HHKB( \
@@ -70,16 +72,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 )
 
 enum keymap_layout {
-    SAFE = 0,
-    BASE,
-    PSEUDO_US,
-    IOS,
+    BASE = 0,
+    SAFE,
+    /* PSEUDO_US, */
+    /* IOS, */
     DVORAK,
-    TENKEY,
     MOUSE,
     HHKB,
-    HHKB_EXT,
-    HHKB_IOS,
+    /* HHKB_EXT, */
+    /* HHKB_IOS, */
+    /* LSFT_LY, */
     LAYER,
 };
 
@@ -119,7 +121,7 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
 
 
   [HHKB]=KEYMAP_HHKB(
-		     GRV, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, INS,  \
+		     FN21, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, INS,  \
 		     CAPS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,PSCR,SLCK,PAUS, UP, TRNS, DEL, \
 		     TRNS,VOLD,VOLU,MUTE,TRNS,TRNS,PAST,PSLS,HOME,PGUP,LEFT,RGHT,     TRNS, \
 		     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,PPLS,PMNS,END, PGDN,DOWN,          TRNS, \
@@ -131,15 +133,33 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
 		     TAB, NO,  NO,  NO,  NO,  NO,  NO,BTN1,BTN3,BTN2,NO,BTN4,BTN5,    TRNS,
 		     LCTL,NO,  ACL0,ACL1,ACL2, NO, MS_L,MS_D,MS_U,MS_R,TRNS,NO,       FN20,
 		     LSFT,     NO,  NO,  NO,  NO,  NO,WH_L,WH_D,WH_U,WH_R,NO,         TRNS,
-		     FN4, TRNS,TRNS,                FN3,                 TRNS,TRNS, TRNS
+		     FN4, TRNS,TRNS,                FN3,                 TRNS,TRNS,TRNS
 		     ),
 
+  /* [LSFT_LY]=KEYMAP_HHKB( */
+  /* 		     GRV, TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,  \ */
+  /* 		     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, \ */
+  /* 		     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,     TRNS, \ */
+  /* 		     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,          TRNS, \ */
+  /* 		     TRNS, TRNS,TRNS,                TRNS,               TRNS,TRNS,TRNS */
+  /* 		      ), */
+
+    /* Keymap : dvorak */
+  [DVORAK]=KEYMAP_HHKB(
+		       FN21, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   LBRC,RBRC,FN2,
+		       TAB, QUOT,COMM,DOT, P,   Y,   F,   G,   C,   R,   L,   SLSH,EQL, BSPC,
+		       CAPS,A,   O,   E,   U,   I,   D,   H,   T,   N,   S,   MINS,     ENT,
+		       LSFT,SCLN,Q,   J,   K,   X,   B,   M,   W,   V,   Z,             RSFT,
+		       FN4, FN8,FN0,                FN3,                 RGUI,FN10, FN1
+		       ),
+
+
   [LAYER]=KEYMAP_HHKB(
-		     PWR, TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, FN2,  \
-		     TRNS,FN11,FN12,FN13,TRNS,TRNS,TRNS,FN14,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, \
-		     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,     FN20, \
-		     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,          TRNS, \
-		     FN4, TRNS,TRNS,                FN3,               TRNS,TRNS,TRNS
+		     PWR, TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,PSLS,PAST,PMNS,  NO,  NO,
+		     TRNS,FN11,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,KP_7,KP_8,KP_9,PPLS,PPLS,TRNS,
+		     TRNS,TRNS,FN14,FN12,TRNS,TRNS,TRNS,TRNS,KP_4, KP_5, KP_6,  PENT,  PENT,
+		     TRNS,TRNS,TRNS,TRNS,TRNS,FN11,TRNS,FN13,KP_1,KP_2,KP_3,           TRNS,
+		     FN4, TRNS,TRNS,                FN3,                 TRNS,KP_0, TRNS
 		      ),
 };
 
@@ -155,33 +175,21 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
 }
 
 enum function_id {
-    SHIFT_ESC,
+    ESCAPE,
 };
 
-void action_function(keyrecord_t *record, uint8_t id, uint8_t opt) {
-#   define MODS_CTRL_MASK   (MOD_BIT(KC_LCTRL)|MOD_BIT(KC_RCTRL))
-  static uint8_t shift_esc_shift_mask;
-  switch (id) {
-    case SHIFT_ESC:
-      shift_esc_shift_mask = get_mods()&MODS_CTRL_MASK;
-      if (record->event.pressed) {
-        if (shift_esc_shift_mask) {
-          add_key(KC_GRV);
-          send_keyboard_report();
-        } else {
-          add_key(KC_ESC);
-          send_keyboard_report();
-        }
-      } else {
-        if (shift_esc_shift_mask) {
-          del_key(KC_GRV);
-          send_keyboard_report();
-        } else {
-          del_key(KC_ESC);
-          send_keyboard_report();
-        }
-      }
-      break;
+void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
+{
+  if(id == ESCAPE){
+    void (*method)(uint8_t) = (record->event.pressed) ? &add_key : &del_key;
+    uint8_t shifted = get_mods() & (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT));
+ 
+    if(layer_state == 0)
+      method(shifted ? KC_GRAVE : KC_ESCAPE);
+    else
+      method(shifted ? KC_ESCAPE : KC_GRAVE);
+ 
+    send_keyboard_report();
   }
 }
 
@@ -197,13 +205,14 @@ const action_t fn_actions[] PROGMEM = {
   [8]   = ACTION_MODS_TAP_KEY(MOD_LALT, KC_ZKHK),
   [10]  = ACTION_MODS_TAP_KEY(MOD_RALT, KC_HENK),
   [11]  = ACTION_DEFAULT_LAYER_SET(BASE),
-  [12]  = ACTION_DEFAULT_LAYER_SET(HHKB),
+  [12]  = ACTION_DEFAULT_LAYER_SET(DVORAK),
   [13]  = ACTION_DEFAULT_LAYER_SET(MOUSE),
   [14]  = ACTION_DEFAULT_LAYER_SET(SAFE),
   /* [11] = ACTION_DEFAULT_LAYER_SET(TENKEY), */
   /* [12] = ACTION_DEFAULT_LAYER_SET(DVORAK), */
   [20] = ACTION_MODS_TAP_KEY(MOD_RCTL, KC_ENT),
-  [21] = ACTION_FUNCTION(SHIFT_ESC),
+  /* [21] = ACTION_LAYER_MODS(LSFT_LY, MOD_LSFT), */
+  [21] = ACTION_FUNCTION(ESCAPE),
   [22] = ACTION_MACRO(0),
 };
 
