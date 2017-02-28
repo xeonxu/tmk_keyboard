@@ -17,6 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "keymap_common.h"
 #include "macro_str.h"
+#include "action_util.h"
 
 
 /* ,---.   ,---------------. ,---------------. ,---------------. ,-----------.
@@ -102,40 +103,40 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
   [SAFE]=KEYMAP(
 		ESC,      F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12,      PSCR,SLCK,BRK,
 		GRV, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, BSPC,     INS, HOME,PGUP,    NLCK,PSLS,PAST,PMNS,
-		TAB, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,   LBRC,RBRC,BSLS,     DEL, END, PGDN,    P7,  P8,  P9,
+		TAB, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,   LBRC,RBRC,FN2,     DEL, END, PGDN,    P7,  P8,  P9,
 		CAPS,A,   S,   D,   F,   G,   H,   J,   K,   L,   SCLN,QUOT,     ENT,                         P4,  P5,  P6,  PPLS,
 		LSFT,Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, SLSH,          RSFT,          UP,           P1,  P2,  P3,
 		FN4, LGUI,LALT,          SPC,                     RALT,RGUI,APP, RCTL,     LEFT,DOWN,RGHT,    P0,       PDOT,PENT
 		),
 
   [BASE]=KEYMAP_HHKB(
-		     ESC, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, FN2, \
+		     FN21, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, FN2, \
 		     TAB, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,    FN5,RBRC,BSPC, \
-		     LCTL,A,   S,   D,   F,   G,   H,   J,   K,   L, FN7,    FN6,     FN12, \
+		     LCTL,A,   S,   D,   F,   G,   H,   J,   K,   L, FN7,    FN6,     FN20, \
 		     LSFT,Z,   X,   C,   V,   B,   N,   M,COMM, DOT,SLSH,             RSFT, \
 		     FN4, FN8,FN0,                FN3,                 RGUI,FN10, FN1
 		     ),
 
 
   [HHKB]=KEYMAP_HHKB(
-		     PWR, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, INS,  \
+		     GRV, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, INS,  \
 		     CAPS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,PSCR,SLCK,PAUS, UP, TRNS, DEL, \
-		     TRNS,VOLD,VOLU,MUTE,TRNS,TRNS,PAST,PSLS,HOME,PGUP,LEFT,RGHT,FN12, \
+		     TRNS,VOLD,VOLU,MUTE,TRNS,TRNS,PAST,PSLS,HOME,PGUP,LEFT,RGHT,TRNS, \
 		     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,PPLS,PMNS,END, PGDN,DOWN,     TRNS, \
 		     FN4, TRNS,TRNS,                FN3,               TRNS,TRNS,TRNS
 		     ),
   [MOUSE]=KEYMAP_HHKB(
-		     ESC, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, INS,
+		     POWER, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, INS,
 		     TAB, NO,  NO,  NO,  NO,  NO,  NO,BTN1,BTN3,BTN2,NO,BTN4,BTN5,    TRNS,
-		     LCTL,NO,  ACL0,ACL1,ACL2, NO, MS_L,MS_D,MS_U,MS_R,TRNS,NO,       FN12,
+		     LCTL,NO,  ACL0,ACL1,ACL2, NO, MS_L,MS_D,MS_U,MS_R,TRNS,NO,       FN20,
 		     LSFT,     NO,  NO,  NO,  NO,  NO,WH_L,WH_D,WH_U,WH_R,NO,         TRNS,
-		     CAPS, FN4,FN1,                FN3,                 RGUI,FN5, CAPS
+		     FN4, TRNS,TRNS,                FN3,                 TRNS,TRNS, TRNS
 		     ),
 
   [LAYER]=KEYMAP_HHKB(
 		     PWR, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, INS,  \
 		     CAPS,FN11,FN12,FN13,TRNS,TRNS,TRNS,FN14,PSCR,SLCK,PAUS, UP, TRNS, DEL, \
-		     TRNS,VOLD,VOLU,MUTE,TRNS,TRNS,PAST,PSLS,HOME,PGUP,LEFT,RGHT,FN12, \
+		     TRNS,VOLD,VOLU,MUTE,TRNS,TRNS,PAST,PSLS,HOME,PGUP,LEFT,RGHT,FN20, \
 		     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,PPLS,PMNS,END, PGDN,DOWN,     TRNS, \
 		     FN4, TRNS,TRNS,                FN3,               TRNS,TRNS,TRNS
 		      ),
@@ -151,6 +152,37 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
         MACRO_NONE );
   }
   return MACRO_NONE;
+}
+
+enum function_id {
+    SHIFT_ESC,
+};
+
+void action_function(keyrecord_t *record, uint8_t id, uint8_t opt) {
+#   define MODS_CTRL_MASK   (MOD_BIT(KC_LCTRL)|MOD_BIT(KC_RCTRL))
+  static uint8_t shift_esc_shift_mask;
+  switch (id) {
+    case SHIFT_ESC:
+      shift_esc_shift_mask = get_mods()&MODS_CTRL_MASK;
+      if (record->event.pressed) {
+        if (shift_esc_shift_mask) {
+          add_key(KC_GRV);
+          send_keyboard_report();
+        } else {
+          add_key(KC_ESC);
+          send_keyboard_report();
+        }
+      } else {
+        if (shift_esc_shift_mask) {
+          del_key(KC_GRV);
+          send_keyboard_report();
+        } else {
+          del_key(KC_ESC);
+          send_keyboard_report();
+        }
+      }
+      break;
+  }
 }
 
 const action_t fn_actions[] PROGMEM = {
@@ -171,6 +203,7 @@ const action_t fn_actions[] PROGMEM = {
   /* [11] = ACTION_DEFAULT_LAYER_SET(TENKEY), */
   /* [12] = ACTION_DEFAULT_LAYER_SET(DVORAK), */
   [20] = ACTION_MODS_TAP_KEY(MOD_RCTL, KC_ENT),
-  [21] = ACTION_MACRO(0),
+  [21] = ACTION_FUNCTION(SHIFT_ESC),
+  [22] = ACTION_MACRO(0),
 };
 
