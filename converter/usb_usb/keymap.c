@@ -81,7 +81,7 @@ enum keymap_layout {
     HHKB,
     TEENKEY,
     /* HHKB_IOS, */
-    /* LSFT_LY, */
+    LSFT_LY,
     LAYER,
 };
 
@@ -112,16 +112,16 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
 		),
 
   [BASE]=KEYMAP_HHKB(
-		     FN21, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, FN2, \
+		     ESC, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, FN2, \
 		     FN23, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,    FN5,RBRC,FN22, \
 		     LCTL,A,   S,   D,   F,   G,   H,   J,   K,   L, FN7,    FN6,     FN20, \
-		     LSFT,Z,   X,   C,   V,   B,   N,   M,COMM, DOT,SLSH,             RSFT, \
-		     FN4, FN8,FN0,                FN3,                 RGUI,FN10, FN1
+		     FN24,Z,   X,   C,   V,   B,   N,   M,COMM, DOT,SLSH,             RSFT, \
+		     FN4, FN8,FN0,                SPC,                 RGUI,FN10, FN1
 		     ),
 
 
   [HHKB]=KEYMAP_HHKB(
-		     FN21, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, INS,  \
+		     GRV, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, INS,  \
 		     CAPS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,PSCR,SLCK,PAUS, UP, TRNS, DEL, \
 		     TRNS,VOLD,VOLU,MUTE,TRNS,TRNS,PAST,PSLS,HOME,PGUP,LEFT,RGHT,     TRNS, \
 		     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,PPLS,PMNS,END, PGDN,DOWN,          TRNS, \
@@ -131,26 +131,26 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
   [MOUSE]=KEYMAP_HHKB(
 		     POWER, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, INS,
 		     TAB, NO,  NO,  NO,  NO,  NO,  NO,BTN1,BTN3,BTN2,NO,BTN4,BTN5,    TRNS,
-		     LCTL,NO,  ACL0,ACL1,ACL2, NO, MS_L,MS_D,MS_U,MS_R,TRNS,NO,       FN20,
-		     LSFT,     NO,  NO,  NO,  NO,  NO,WH_L,WH_D,WH_U,WH_R,NO,         TRNS,
-		     FN4, TRNS,TRNS,                FN3,                 TRNS,TRNS,TRNS
+		     TRNS,NO,  ACL0,ACL1,ACL2, NO, MS_L,MS_D,MS_U,MS_R,TRNS,NO,       FN20,
+		     TRNS,     NO,  NO,  NO,  NO,  NO,WH_L,WH_D,WH_U,WH_R,NO,         TRNS,
+		     FN4, TRNS,TRNS,                TRNS,                 TRNS,TRNS,TRNS
 		     ),
 
-  /* [LSFT_LY]=KEYMAP_HHKB( */
-  /* 		     GRV, TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,  \ */
-  /* 		     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, \ */
-  /* 		     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,     TRNS, \ */
-  /* 		     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,          TRNS, \ */
-  /* 		     TRNS, TRNS,TRNS,                TRNS,               TRNS,TRNS,TRNS */
-  /* 		      ), */
+  [LSFT_LY]=KEYMAP_HHKB(
+  		     GRV, TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,  \
+  		     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, \
+  		     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,     TRNS, \
+  		     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,          TRNS, \
+  		     TRNS, TRNS,TRNS,                FN3,               TRNS,TRNS,TRNS
+  		      ),
 
     /* Keymap : dvorak */
   [DVORAK]=KEYMAP_HHKB(
 		       FN21, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   LBRC,RBRC,FN2,
 		       FN23, QUOT,COMM,DOT, P,   Y,   F,   G,   C,   R,   L,   SLSH,EQL, FN22,
 		       LCTL,A,   O,   E,   U,   I,   D,   H,   T,   N,   S,   MINS,     FN20,
-		       LSFT,SCLN,Q,   J,   K,   X,   B,   M,   W,   V,   Z,             RSFT,
-		       FN4, FN8,FN0,                FN3,                 RGUI,FN10, FN1
+		       FN24,SCLN,Q,   J,   K,   X,   B,   M,   W,   V,   Z,             RSFT,
+		       FN4, FN8,FN0,                SPC,                 RGUI,FN10, FN1
 		       ),
 
 
@@ -219,10 +219,10 @@ const action_t fn_actions[] PROGMEM = {
   [15]  = ACTION_DEFAULT_LAYER_SET(TEENKEY),
   /* [12] = ACTION_DEFAULT_LAYER_SET(DVORAK), */
   [20] = ACTION_MODS_TAP_KEY(MOD_RCTL, KC_ENT),
-  /* [21] = ACTION_LAYER_MODS(LSFT_LY, MOD_LSFT), */
   [21] = ACTION_FUNCTION(ESCAPE),
   [22]   = ACTION_LAYER_TAP_KEY(LAYER, KC_BSPC),
   [23]   = ACTION_LAYER_TAP_KEY(TEENKEY, KC_TAB),
+  [24] = ACTION_LAYER_MODS(LSFT_LY, MOD_LSFT),
   /* [23] = ACTION_MACRO(0), */
 };
 
