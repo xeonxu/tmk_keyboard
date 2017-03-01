@@ -79,7 +79,7 @@ enum keymap_layout {
     DVORAK,
     MOUSE,
     HHKB,
-    /* HHKB_EXT, */
+    TEENKEY,
     /* HHKB_IOS, */
     /* LSFT_LY, */
     LAYER,
@@ -113,7 +113,7 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
 
   [BASE]=KEYMAP_HHKB(
 		     FN21, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, FN2, \
-		     TAB, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,    FN5,RBRC,FN22, \
+		     FN23, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,    FN5,RBRC,FN22, \
 		     LCTL,A,   S,   D,   F,   G,   H,   J,   K,   L, FN7,    FN6,     FN20, \
 		     LSFT,Z,   X,   C,   V,   B,   N,   M,COMM, DOT,SLSH,             RSFT, \
 		     FN4, FN8,FN0,                FN3,                 RGUI,FN10, FN1
@@ -147,16 +147,24 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
     /* Keymap : dvorak */
   [DVORAK]=KEYMAP_HHKB(
 		       FN21, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   LBRC,RBRC,FN2,
-		       TAB, QUOT,COMM,DOT, P,   Y,   F,   G,   C,   R,   L,   SLSH,EQL, FN22,
+		       FN23, QUOT,COMM,DOT, P,   Y,   F,   G,   C,   R,   L,   SLSH,EQL, FN22,
 		       LCTL,A,   O,   E,   U,   I,   D,   H,   T,   N,   S,   MINS,     FN20,
 		       LSFT,SCLN,Q,   J,   K,   X,   B,   M,   W,   V,   Z,             RSFT,
 		       FN4, FN8,FN0,                FN3,                 RGUI,FN10, FN1
 		       ),
 
 
+  [TEENKEY]=KEYMAP_HHKB(
+		     PWR, TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,NLCK,PSLS,PAST,PMNS,PMNS,PPLS,TRNS,
+		     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,KP_7,KP_8,KP_9,PPLS,PPLS,PPLS,TRNS,
+		     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,KP_4,KP_5,KP_6,PENT,  TRNS,  TRNS,
+		     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,KP_1,KP_2,KP_3,PENT,           TRNS,
+		     TRNS, TRNS,TRNS,                KP_0,                 PDOT,TRNS, TRNS
+		      ),
+
   [LAYER]=KEYMAP_HHKB(
 		     PWR, TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,PSLS,PAST,PMNS,  TRNS,  TRNS,
-		     TRNS,FN11,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,KP_7,KP_8,KP_9,PPLS,PPLS,TRNS,
+		     TRNS,FN11,TRNS,TRNS,TRNS,F15,TRNS,TRNS,KP_7,KP_8,KP_9,PPLS,PPLS,TRNS,
 		     TRNS,TRNS,FN14,FN12,TRNS,TRNS,TRNS,TRNS,KP_4, KP_5, KP_6,  PENT,  PENT,
 		     TRNS,TRNS,TRNS,TRNS,TRNS,FN11,TRNS,FN13,KP_1,KP_2,KP_3,           TRNS,
 		     FN4, TRNS,TRNS,                FN3,                 TRNS,KP_0, TRNS
@@ -208,12 +216,13 @@ const action_t fn_actions[] PROGMEM = {
   [12]  = ACTION_DEFAULT_LAYER_SET(DVORAK),
   [13]  = ACTION_DEFAULT_LAYER_SET(MOUSE),
   [14]  = ACTION_DEFAULT_LAYER_SET(SAFE),
-  /* [11] = ACTION_DEFAULT_LAYER_SET(TENKEY), */
+  [15]  = ACTION_DEFAULT_LAYER_SET(TEENKEY),
   /* [12] = ACTION_DEFAULT_LAYER_SET(DVORAK), */
   [20] = ACTION_MODS_TAP_KEY(MOD_RCTL, KC_ENT),
   /* [21] = ACTION_LAYER_MODS(LSFT_LY, MOD_LSFT), */
   [21] = ACTION_FUNCTION(ESCAPE),
   [22]   = ACTION_LAYER_TAP_KEY(LAYER, KC_BSPC),
+  [23]   = ACTION_LAYER_TAP_KEY(TEENKEY, KC_TAB),
   /* [23] = ACTION_MACRO(0), */
 };
 
