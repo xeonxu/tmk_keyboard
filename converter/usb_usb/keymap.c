@@ -104,7 +104,7 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
  */
   [SAFE]=KEYMAP(
 		ESC,      F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12,      PSCR,SLCK,BRK,
-		GRV, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, BSPC,     INS, HOME,PGUP,    NLCK,PSLS,PAST,PMNS,
+		GRV, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, FN22,     INS, HOME,PGUP,    NLCK,PSLS,PAST,PMNS,
 		TAB, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,   LBRC,RBRC,FN2,     DEL, END, PGDN,    P7,  P8,  P9,
 		CAPS,A,   S,   D,   F,   G,   H,   J,   K,   L,   SCLN,QUOT,     ENT,                         P4,  P5,  P6,  PPLS,
 		LSFT,Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, SLSH,          RSFT,          UP,           P1,  P2,  P3,
@@ -113,7 +113,7 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
 
   [BASE]=KEYMAP_HHKB(
 		     FN21, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, FN2, \
-		     TAB, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,    FN5,RBRC,BSPC, \
+		     TAB, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,    FN5,RBRC,FN22, \
 		     LCTL,A,   S,   D,   F,   G,   H,   J,   K,   L, FN7,    FN6,     FN20, \
 		     LSFT,Z,   X,   C,   V,   B,   N,   M,COMM, DOT,SLSH,             RSFT, \
 		     FN4, FN8,FN0,                FN3,                 RGUI,FN10, FN1
@@ -147,15 +147,15 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
     /* Keymap : dvorak */
   [DVORAK]=KEYMAP_HHKB(
 		       FN21, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   LBRC,RBRC,FN2,
-		       TAB, QUOT,COMM,DOT, P,   Y,   F,   G,   C,   R,   L,   SLSH,EQL, BSPC,
-		       CAPS,A,   O,   E,   U,   I,   D,   H,   T,   N,   S,   MINS,     ENT,
+		       TAB, QUOT,COMM,DOT, P,   Y,   F,   G,   C,   R,   L,   SLSH,EQL, FN22,
+		       LCTL,A,   O,   E,   U,   I,   D,   H,   T,   N,   S,   MINS,     FN20,
 		       LSFT,SCLN,Q,   J,   K,   X,   B,   M,   W,   V,   Z,             RSFT,
 		       FN4, FN8,FN0,                FN3,                 RGUI,FN10, FN1
 		       ),
 
 
   [LAYER]=KEYMAP_HHKB(
-		     PWR, TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,PSLS,PAST,PMNS,  NO,  NO,
+		     PWR, TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,PSLS,PAST,PMNS,  TRNS,  TRNS,
 		     TRNS,FN11,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,KP_7,KP_8,KP_9,PPLS,PPLS,TRNS,
 		     TRNS,TRNS,FN14,FN12,TRNS,TRNS,TRNS,TRNS,KP_4, KP_5, KP_6,  PENT,  PENT,
 		     TRNS,TRNS,TRNS,TRNS,TRNS,FN11,TRNS,FN13,KP_1,KP_2,KP_3,           TRNS,
@@ -198,7 +198,7 @@ const action_t fn_actions[] PROGMEM = {
   [1]   = ACTION_LAYER_TAP_KEY(HHKB, KC_KANA),
   [2]   = ACTION_LAYER_TAP_KEY(LAYER, KC_BSLS),
   [3]   = ACTION_LAYER_TAP_KEY(MOUSE, KC_SPACE),
-  [4]   = ACTION_LAYER_TAP_KEY(LAYER, KC_LCTL),
+  [4]   = ACTION_LAYER_MOMENTARY(LAYER),
   [5]   = ACTION_MODS_TAP_KEY(MOD_LSFT | MOD_LCTL | MOD_LALT | MOD_LGUI, KC_LBRC),
   [6]   = ACTION_MODS_TAP_KEY(MOD_LCTL | MOD_LALT | MOD_LGUI, KC_QUOT),
   [7]   = ACTION_MODS_TAP_KEY(MOD_LCTL | MOD_LALT | MOD_LSFT, KC_SCLN),
@@ -213,6 +213,7 @@ const action_t fn_actions[] PROGMEM = {
   [20] = ACTION_MODS_TAP_KEY(MOD_RCTL, KC_ENT),
   /* [21] = ACTION_LAYER_MODS(LSFT_LY, MOD_LSFT), */
   [21] = ACTION_FUNCTION(ESCAPE),
-  [22] = ACTION_MACRO(0),
+  [22]   = ACTION_LAYER_TAP_KEY(LAYER, KC_BSPC),
+  /* [23] = ACTION_MACRO(0), */
 };
 
